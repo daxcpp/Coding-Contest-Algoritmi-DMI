@@ -1,2 +1,2 @@
-# Coding Contest - Algoritmi
+# CMS - Algoritmi
 
