@@ -58,17 +58,17 @@ int main(){
   ofstream out("output.txt");
 
 
-  for(int i = 0; i < 3; i++){
+  for(int i = 0; i < 100; i++){
     string type; in >> type;
     int n; in >> n;
     if(type == "int"){
       Heap<int>* t = new Heap<int>(500);
-      
+
       for(int j = 1; j <= n; j++){
         int tmp; in >> tmp;
         t->Insert(tmp);
       }
-     
+      
       t->print(out);
       delete t;
 
@@ -80,7 +80,7 @@ int main(){
         bool tmp; in >> tmp;
         t->Insert(tmp);
       }
-
+     
       t->print(out);
       delete t;
     }
@@ -91,19 +91,19 @@ int main(){
         double tmp; in >> tmp;
         t->Insert(tmp);
       }
-
+      
       t->print(out);
       delete t;
 
     }
     else if(type == "char"){
       Heap<char>* t = new Heap<char>(500);
-    
+
       for(int j = 1; j <= n; j++){
         char tmp; in >> tmp;
         t->Insert(tmp);
       }
-
+      
       t->print(out);
       delete t;
 

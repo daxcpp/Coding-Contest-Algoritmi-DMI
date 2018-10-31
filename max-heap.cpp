@@ -4,104 +4,156 @@ using namespace std;
 
 template <class H>
 class Heap{
-  private:
-    H* vett;
-    int heapsize;
+    private:
+        H* vett;
+        int heapsize;
+        int maxdim;
+        int chiamate;
 
-    int left(int i){return i << 1;}
-    int right(int i){return (i<<1)|1;}
-    int parent(int i){return i >> 1;}
-  public:
-    Heap(){
-      heapsize = 0;
-    }
+        int left(int i){return i << 1;}
+        int right(int i){return (i<<1) | 1;}
+        int parent(int i){return i >> 1;}
+    public:
+        Heap(int max): maxdim(max){
+            vett = new H[maxdim];
+            heapsize = 0;
+            chiamate = 0;
+        }
 
-    void Heapify(int i){
-      int l = left(i);
-      int r = right(i);
-      int max = i;
+        int getChiamate(){return chiamate;}
 
-      if(l <= heapsize && vett[l] > vett[max])
-        max = l;
-      if(r <= heapsize && vett[r] > vett[max])
-        max = r;
-      if(max != i){
-        swap(vett[i], vett[max]);
-        Heapify(max);
-      } 
-    }
+        void Heapify(int i){
+            chiamate++;
+            int l = left(i);
+            int r = right(i);
+            int max = i;
 
-    void Build(H* A, int n){
-      heapsize = n;
-      vett = A;
-      for(int i = heapsize; i > 0; i--)
-        Heapify(i);
-    }
+            if(l <= heapsize && vett[l] > vett[max])
+                max = l;
+            if(r <= heapsize && vett[r] > vett[max])
+                max = r;
+            
+            if(max != i){
+                swap(vett[i], vett[max]);
+                Heapify(max);
+            }
+        }
 
-    void print(ofstream &out){
-      for(int i = 1; i <= heapsize; i++)
-        out << vett[i] << "\t";
-      out << "\n";
-    }
+        void enqueue(H x){
+            heapsize++;
+
+            vett[heapsize] = x;
+
+            int i = heapsize;
+
+            while(i > 1 && vett[parent(i)] < vett[i]){
+                swap(vett[i], vett[parent(i)]);
+                i = parent(i);
+            }
+        }
+
+        void extract(){
+            swap(vett[1], vett[heapsize]);
+            heapsize--;
+            Heapify(1);
+
+            //return vett[heapsize+1];
+        }
+
+        void print(ofstream &out){
+            for(int i = 1; i <= heapsize; i++)
+                out << vett[i] << " ";
+            out << endl;
+        }
+
 };
 
 
+
 int main(){
-  ifstream in("input.txt");
-  ofstream out("output.txt");
+    ifstream in("input.txt");
+    ofstream out("output.txt");
 
+    for(int i = 0; i < 100; i++){
+        string type; in >> type;
+        int n; in >> n;
 
-  for(int i = 0; i < 100; i++){
-    string type; in >> type;
-    int n; in >> n;
+        if(type == "int"){
+            Heap<int>* t = new Heap<int>(n*2);
 
-    if(type == "int"){
-      Heap<int>* t = new Heap<int>();
-      int* vett = new int[200];
-      for(int j = 1; j <= n; j++){
-        int tmp; in >> tmp;
-        vett[j] = tmp;
-      }
-      t->Build(vett, n);
-      t->print(out);
-      delete t;
-      delete []vett;
+            for(int j = 0; j < n; j++){
+                string tmp; in >> tmp;
+               
+                if(tmp == "extract")
+                    t->extract();
+                
+                else{
+                    string _val = tmp.substr(2, tmp.length());
+                    int val = stoi(_val);
+                    t->enqueue(val);
+                }
+            }
+            out << t->getChiamate() << " ";
+            t->print(out);
+            delete t;
+        }
+
+        if(type == "bool"){
+            Heap<bool>* t = new Heap<bool>(n*2);
+
+            for(int j = 0; j < n; j++){
+                string tmp; in >> tmp;
+
+                if(tmp == "extract")
+                    t->extract();
+                else{
+                    string _val = tmp.substr(2, tmp.length());
+                    bool val = stoi(_val);
+                    t->enqueue(val);
+                }
+            }
+            out << t->getChiamate() << " ";
+            t->print(out);
+            delete t;
+        }
+
+        if(type == "double"){
+            Heap<double>* t = new Heap<double>(n*2);
+
+            for(int j = 0; j < n; j++){
+                string tmp; in >> tmp;
+
+                if(tmp == "extract")
+                    t->extract();
+                else{
+                    string _val = tmp.substr(2, tmp.length());
+                    double val = stod(_val);
+                    t->enqueue(val);
+                }
+            }
+            out << t->getChiamate() << " ";
+            t->print(out);
+            delete t;
+        }
+
+        if(type == "char"){
+            Heap<int>* t = new Heap<int>(n*2);
+
+            for(int j = 0; j < n; j++){
+                string tmp; in >> tmp;
+
+                if(tmp == "extract")
+                    t->extract();
+                else{
+                    
+                    char val = tmp[2];
+                    t->enqueue(val);
+                }
+            }
+            out << t->getChiamate() << " ";
+            t->print(out);
+            delete t;
+        }
     }
-    else if(type == "bool"){
-      Heap<bool>* t = new Heap<bool>();
-      bool* vett = new bool[200];
-      for(int j = 1; j <= n; j++){
-        bool tmp; in >> tmp;
-        vett[j] = tmp;
-      }
-      t->Build(vett, n);
-      t->print(out);
-      delete t;
-      delete []vett;
-    }
-    else if(type == "double"){
-      Heap<double>* t = new Heap<double>();
-      double* vett = new double[200];
-      for(int j = 1; j <= n; j++){
-        double tmp; in >> tmp;
-        vett[j] = tmp;
-      }
-      t->Build(vett, n);
-      t->print(out);
-      delete t;
-      delete []vett;
-    }
-    else if(type == "char"){
-      Heap<char>* t = new Heap<char>();
-      char* vett = new char[200];
-      for(int j = 1; j <= n; j++){
-        char tmp; in >> tmp;
-        vett[j] = tmp;
-      }
-      t->Build(vett, n);
-      t->print(out);
-      delete t;
-      delete []vett;
-    }
-  }
+
 }
