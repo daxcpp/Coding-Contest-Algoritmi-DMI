@@ -151,5 +151,4 @@ int main(){
             delete t;
         }
     }
-    cout << endl;
 }

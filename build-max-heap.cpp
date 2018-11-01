@@ -34,7 +34,7 @@ class Heap{
     void Build(H* A, int n){
       heapsize = n;
       vett = A;
-      for(int i = heapsize; i > 0; i--)
+      for(int i = heapsize/2; i > 0; i--)
         Heapify(i);
     }
 
