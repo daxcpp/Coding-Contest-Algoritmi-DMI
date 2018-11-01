@@ -28,15 +28,15 @@ public:
             chiamate++;
         int l = left(i);
         int r = right(i);
-        int max = i;
+        int min = i;
 
-        if(l <= heapsize && vett[l] > vett[max])
-            max = l;
-        if(r <= heapsize && vett[r] > vett[max])
-            max = r;
-        if(max != i){
-            swap(vett[max], vett[i]);
-            Heapify(max);
+        if(l <= heapsize && vett[l] < vett[min])
+            min = l;
+        if(r <= heapsize && vett[r] < vett[min])
+            min = r;
+        if(min != i){
+            swap(vett[min], vett[i]);
+            Heapify(min);
         }
     }
 
@@ -45,7 +45,7 @@ public:
         vett[heapsize] = x;
 
         int i = heapsize;
-        while(i > 1 && vett[parent(i)] < vett[i]){
+        while(i > 1 && vett[parent(i)] > vett[i]){
             swap(vett[parent(i)], vett[i]);
             i = parent(i);
         }
