@@ -52,8 +52,9 @@ class Heap{
         }
 
         void empty(){
-            for(int i = 1; i <= heapsize; i++)
+            while(heapsize != 0){
                 this->extract();
+            }
         }
 
        
@@ -66,7 +67,7 @@ int main(){
     ifstream in("input.txt");
     ofstream out("output.txt");
 
-    for(int i = 0; i < 3; i++){
+    for(int i = 0; i < 100; i++){
         string type; in >> type;
         int n; in >> n;
 
@@ -79,9 +80,8 @@ int main(){
             }
 
             t->buildHeap(vett, n);
-            cout << t->getChiamate();
             t->empty();
-            cout << "\t" << t->getChiamate() << endl;
+
             out << t->getChiamate() << endl;
             delete t;
             delete vett;
@@ -96,9 +96,8 @@ int main(){
             }
 
             t->buildHeap(vett, n);
-            cout << t->getChiamate();
             t->empty();
-            cout << "\t" << t->getChiamate() << endl;
+
             out << t->getChiamate() << endl;
             delete t;
             delete vett;
@@ -113,9 +112,8 @@ int main(){
             }
 
             t->buildHeap(vett, n);
-            cout << t->getChiamate();
             t->empty();
-            cout << "\t" << t->getChiamate() << endl;
+    
             out << t->getChiamate() << endl;
             delete t;
             delete vett;
@@ -130,9 +128,8 @@ int main(){
             }
 
             t->buildHeap(vett, n);
-            cout << t->getChiamate();
             t->empty();
-            cout << "\t" << t->getChiamate() << endl;
+
             out << t->getChiamate() << endl;
             delete t;
             delete vett;
