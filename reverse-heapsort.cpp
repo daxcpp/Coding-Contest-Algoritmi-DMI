@@ -2,12 +2,12 @@
 #include <fstream>
 using namespace std;
 
+
 template <class H>
 class Heap{
     private:
         H* vett;
         int heapsize;
-        int maxdim;
         int chiamate;
 
         int left(int i){return i << 1;}
@@ -22,25 +22,25 @@ class Heap{
         void Heapify(int i){
             if(heapsize >= 1)
                 chiamate++;
-            
             int l = left(i);
             int r = right(i);
-            int max = i;
+            int min = i;
 
-            if(l <= heapsize && vett[l] > vett[max])
-                max = l;
-            if(r <= heapsize && vett[r] > vett[max])
-                max = r;
+            if(l <= heapsize && vett[l] < vett[min])
+                min = l;
+            if(r <= heapsize && vett[r] < vett[min])
+                min = r;
             
-            if(max != i){
-                swap(vett[max], vett[i]);
-                Heapify(max);
+            if(min != i){
+                swap(vett[min], vett[i]);
+                Heapify(min);
             }
         }
 
-        void buildHeap(H* A, int n){
+        void Build(H* A, int n){
             vett = A;
             heapsize = n;
+
             for(int i = heapsize/2; i > 0; i--)
                 Heapify(i);
         }
@@ -57,11 +57,12 @@ class Heap{
 };
 
 template <class H>
-void printvett(H* vett, int n, ofstream &out){
+void printvett(H* vett, int n, ofstream& out){
     for(int i = 1; i <= n; i++)
         out << vett[i] << " ";
     out << endl;
 }
+
 
 int main(){
     ifstream in("input.txt");
@@ -79,7 +80,7 @@ int main(){
                 vett[j] = tmp;
             }
 
-            t->buildHeap(vett, n);
+            t->Build(vett, n);
             int* A = new int[n+1];
 
             for(int i = n; i > 0; i--)
@@ -101,7 +102,7 @@ int main(){
                 vett[j] = tmp;
             }
 
-            t->buildHeap(vett, n);
+            t->Build(vett, n);
             bool* A = new bool[n+1];
             for(int i = n; i > 0; i--)
                 A[i] = t->extract();
@@ -122,7 +123,7 @@ int main(){
                 vett[j] = tmp;
             }
 
-            t->buildHeap(vett, n);
+            t->Build(vett, n);
             double* A = new double[n+1];
             for(int i = n; i > 0; i--)
                 A[i] = t->extract();
@@ -144,7 +145,7 @@ int main(){
                 vett[j] = tmp;
             }
 
-            t->buildHeap(vett, n);
+            t->Build(vett, n);
             char* A = new char[n+1];
             for(int i = n; i > 0; i--)
                 A[i] = t->extract();
