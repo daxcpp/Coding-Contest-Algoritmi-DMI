@@ -177,50 +177,54 @@ template <class H> void BST<H>::Rotate(string type, H x){
 }
 
 template <class H> void BST<H>::rLeft(Nodo<H>* y){
-    Nodo<H>* x = y->getDx();
-    Nodo<H>* z = y->getPadre();
-    if(y != NULL && x != NULL){
-        y->setDx(x->getSx());
-        x->setSx(y);
+     if(y != NULL){
+        Nodo<H>* x = y->getDx();
+        Nodo<H>* z = y->getPadre();
+        if(x != NULL){
+            y->setDx(x->getSx());
+            x->setSx(y);
 
-        if(z != NULL){
-            if(y == z->getDx())
-                z->setDx(x);
+            if(z != NULL){
+                if(y == z->getDx())
+                    z->setDx(x);
+                else
+                    z->setSx(x);
+            }
             else
-                z->setSx(x);
+                radice = x;
+
+            x->setPadre(z);
+            y->setPadre(x);
+
+            if(y->getDx())
+                y->getDx()->setPadre(y); 
         }
-        else
-            radice = x;
-
-        x->setPadre(z);
-        y->setPadre(x);
-
-        if(y->getDx())
-            y->getDx()->setPadre(y); 
     }
 }
 
 template <class H> void BST<H>::rRight(Nodo<H>* y){
-    Nodo<H>* x = y->getSx();
-    Nodo<H>* z = y->getPadre();
-    if(y != NULL && x != NULL){
-        y->setSx(x->getDx());
-        x->setDx(y);
+    if(y != NULL ){
+        Nodo<H>* x = y->getSx();
+        Nodo<H>* z = y->getPadre();
+        if(x != NULL){
+            y->setSx(x->getDx());
+            x->setDx(y);
 
-        if(z != NULL){
-            if(y == z->getSx())
-                z->setSx(x);
+            if(z != NULL){
+                if(y == z->getSx())
+                    z->setSx(x);
+                else
+                    z->setDx(x);
+            }
             else
-                z->setDx(x);
-        }
-        else
-            radice = x;
-        
-        x->setPadre(z);
-        y->setPadre(x);
+                radice = x;
+            
+            x->setPadre(z);
+            y->setPadre(x);
 
-        if(y->getSx())
-            y->getSx()->setPadre(y);
+            if(y->getSx())
+                y->getSx()->setPadre(y);
+        }
     }
 }
 
