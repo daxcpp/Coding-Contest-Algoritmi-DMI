@@ -54,7 +54,7 @@ public:
 template <class H> void RBT<H>::Inorder(Nodo<H>* ptr){
     if(ptr != NULL){
         Inorder(ptr->getSx());
-        cout << "(" << ptr->getElemento() << " " << ptr->getColore() << ")" << "\t";
+        cout << "(" << ptr->getElemento() << " " << ptr->getColore() << ")" << " ";
         Inorder(ptr->getDx());
     }
 }
@@ -79,25 +79,24 @@ template <class H> void RBT<H>::rLeft(Nodo<H>* y){
      if(y != NULL){
         Nodo<H>* x = y->getDx();
         Nodo<H>* z = y->getPadre();
-        if(x != NULL){
-            y->setDx(x->getSx());
-            x->setSx(y);
 
-            if(z != NULL){
-                if(y == z->getDx())
-                    z->setDx(x);
-                else
-                    z->setSx(x);
-            }
+        y->setDx(x->getSx());
+        x->setSx(y);
+
+        if(z != NULL){
+            if(y == z->getDx())
+                z->setDx(x);
             else
-                radice = x;
-
-            x->setPadre(z);
-            y->setPadre(x);
-
-            if(y->getDx())
-                y->getDx()->setPadre(y); 
+                z->setSx(x);
         }
+        else
+            radice = x;
+
+        x->setPadre(z);
+        y->setPadre(x);
+
+        if(y->getDx())
+            y->getDx()->setPadre(y); 
     }
 }
 
@@ -105,25 +104,24 @@ template <class H> void RBT<H>::rRight(Nodo<H>* y){
     if(y != NULL ){
         Nodo<H>* x = y->getSx();
         Nodo<H>* z = y->getPadre();
-        if(x != NULL){
-            y->setSx(x->getDx());
-            x->setDx(y);
 
-            if(z != NULL){
-                if(y == z->getSx())
-                    z->setSx(x);
-                else
-                    z->setDx(x);
-            }
+        y->setSx(x->getDx());
+        x->setDx(y);
+
+        if(z != NULL){
+            if(y == z->getSx())
+                z->setSx(x);
             else
-                radice = x;
-            
-            x->setPadre(z);
-            y->setPadre(x);
-
-            if(y->getSx())
-                y->getSx()->setPadre(y);
+                z->setDx(x);
         }
+        else
+            radice = x;
+        
+        x->setPadre(z);
+        y->setPadre(x);
+
+        if(y->getSx())
+            y->getSx()->setPadre(y);
     }
 }
 
@@ -151,7 +149,7 @@ template <class H> RBT<H>* RBT<H>::Insert(H x){
     else
         tmp->setSx(nuovo);
     
-    this->Insert_Fix(nuovo);
+    //this->Insert_Fix(nuovo);
     
     return this;
 }
@@ -213,6 +211,6 @@ template <class H> void RBT<H>::Print(){
 int main(){
     RBT<int>* t = new RBT<int>();
 
-    t->Insert(9)->Insert(22)->Insert(25)->Insert(15)->Insert(23)->Insert(13)->Insert(2)->Insert(14)->Insert(24)->Insert(1);
+    t->Insert(40)->Insert(34)->Insert(7)->Insert(81)->Insert(90)->Insert(79)->Insert(36)->Insert(78)->Insert(4)->Insert(67)->Insert(45)->Insert(4)->Insert(77);
     t->Print();
 }
