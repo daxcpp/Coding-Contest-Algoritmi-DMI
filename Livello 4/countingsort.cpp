@@ -65,42 +65,13 @@ int main(){
     for(int i = 0; i < 100; i++){
         string type; in >> type;
         int n; in >> n;
+        int* vett = new int[n+1];
 
-        if(type == "int" || type == "bool"){
-            int* vett = new int[n+1];
-
-            for(int j = 1; j <= n; j++)
-                in >> vett[j];
-            vett = CountingSort(vett, n, out);
-            printvett(vett, n, out);
-            delete [] vett;
-        }
-
-        if(type == "char"){
-            int* vett = new int[n+1];
-
-            for(int j = 1; j <= n; j++)
-                in >> vett[j];
-            char* tmp = new char[n+1];
-            vett = CountingSort(vett, n, out);
-
-            for(int j = 1; j <= n; j++)
-                tmp[i] = char(vett[j]);
-            printvett(tmp, n, out);
-            delete [] vett;
-        }
-
-        if(type == "double"){
-            int* vett = new int[n+1];
-
-            for(int j = 1; j <= n; j++)
-                in >> vett[j];
-     
-            delete [] vett;
-        }
-
+        for(int j = 1; j <= n; j++)
+            in >> vett[j];
+        vett = CountingSort(vett, n, out);
+        printvett(vett, n, out);
+        delete [] vett;
+   
         out << endl;
-    }
-    
-
 }
