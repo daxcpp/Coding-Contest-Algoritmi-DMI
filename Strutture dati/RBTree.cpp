@@ -149,7 +149,7 @@ template <class H> RBT<H>* RBT<H>::Insert(H x){
     else
         tmp->setSx(nuovo);
     
-    //this->Insert_Fix(nuovo);
+    this->Insert_Fix(nuovo);
     
     return this;
 }
