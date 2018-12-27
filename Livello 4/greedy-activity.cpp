@@ -15,12 +15,6 @@ public:
     //Get
     int getS(){return s;}
     int getF(){return f;}
-
-    friend bool operator<(Activity &a, Activity &b){
-        if(a.f < b.f)
-            return true;
-        return false;
-    }
 };
 
 void sortA(Activity** vett, int n){ //Fuck complexity
