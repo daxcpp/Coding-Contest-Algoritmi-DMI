@@ -33,7 +33,7 @@ int main(){
     ifstream in("input.txt");
     ofstream out("output.txt");
 
-    for(int i = 0; i < 3; i++){
+    for(int i = 0; i < 100; i++){
         int n; in >> n;
         int* vett = new int[n+1];
         int r, c;

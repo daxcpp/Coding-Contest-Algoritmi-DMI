@@ -7,7 +7,6 @@ using namespace std;
 
 void Knapsack(vector<int> vett, int pmax, ostream &out){
     int sum = 0;
-    int p = 0;
     sort(vett.begin(), vett.end(), greater<int>());
 
     for(int i = 0; i < pmax; i++)
