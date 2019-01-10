@@ -5,29 +5,29 @@ using namespace std;
 template <class H>
 class Nodo{
 private:
-    H elemento;
-    Nodo<H>* padre;
+    H key;
+    Nodo<H>* parent;
     Nodo<H>* dx;
     Nodo<H>* sx;
     char colore;
 public:
     Nodo(H x){
-        elemento = x;
-        padre = NULL;
+        key = x;
+        parent = NULL;
         dx = NULL;
         sx = NULL;
         colore = 'R';
     }
 
     //Get
-    H getElemento(){return elemento;}
-    Nodo<H>* getPadre(){return padre;}
+    H getkey(){return key;}
+    Nodo<H>* getParent(){return parent;}
     Nodo<H>* getDx(){return dx;}
     Nodo<H>* getSx(){return sx;}
     char getColore(){return colore;}
 
     //Set
-    void setPadre(Nodo<H>* x){padre = x;}
+    void setparent(Nodo<H>* x){parent = x;}
     void setDx(Nodo<H>* x){dx = x;}
     void setSx(Nodo<H>* x){sx = x;}
     void setColore(char x){colore = x;}
@@ -54,7 +54,7 @@ public:
 template <class H> void RBT<H>::Inorder(Nodo<H>* ptr){
     if(ptr != NULL){
         Inorder(ptr->getSx());
-        cout << "(" << ptr->getElemento() << " " << ptr->getColore() << ")" << " ";
+        cout << "(" << ptr->getkey() << " " << ptr->getColore() << ")" << " ";
         Inorder(ptr->getDx());
     }
 }
@@ -63,13 +63,13 @@ template <class H> void RBT<H>::Postorder(Nodo<H>* ptr){
     if(ptr != NULL){
         Postorder(ptr->getSx());
         Postorder(ptr->getDx());
-        cout << ptr->getElemento() << "\t";
+        cout << ptr->getkey() << "\t";
     }
 }
 
 template <class H> void RBT<H>::Preorder(Nodo<H>* ptr){
     if(ptr != NULL){
-        cout << ptr->getElemento() << "\t";
+        cout << ptr->getkey() << "\t";
         Preorder(ptr->getSx());
         Preorder(ptr->getDx());
     }
@@ -78,7 +78,7 @@ template <class H> void RBT<H>::Preorder(Nodo<H>* ptr){
 template <class H> void RBT<H>::rLeft(Nodo<H>* y){
      if(y != NULL){
         Nodo<H>* x = y->getDx();
-        Nodo<H>* z = y->getPadre();
+        Nodo<H>* z = y->getParent();
 
         y->setDx(x->getSx());
         x->setSx(y);
@@ -92,18 +92,18 @@ template <class H> void RBT<H>::rLeft(Nodo<H>* y){
         else
             radice = x;
 
-        x->setPadre(z);
-        y->setPadre(x);
+        x->setparent(z);
+        y->setparent(x);
 
         if(y->getDx())
-            y->getDx()->setPadre(y); 
+            y->getDx()->setparent(y); 
     }
 }
 
 template <class H> void RBT<H>::rRight(Nodo<H>* y){
     if(y != NULL ){
         Nodo<H>* x = y->getSx();
-        Nodo<H>* z = y->getPadre();
+        Nodo<H>* z = y->getParent();
 
         y->setSx(x->getDx());
         x->setDx(y);
@@ -117,11 +117,11 @@ template <class H> void RBT<H>::rRight(Nodo<H>* y){
         else
             radice = x;
         
-        x->setPadre(z);
-        y->setPadre(x);
+        x->setparent(z);
+        y->setparent(x);
 
         if(y->getSx())
-            y->getSx()->setPadre(y);
+            y->getSx()->setparent(y);
     }
 }
 
@@ -134,17 +134,17 @@ template <class H> RBT<H>* RBT<H>::Insert(H x){
     while(iter != NULL){
         tmp = iter;
 
-        if(x > iter->getElemento())
+        if(x > iter->getkey())
             iter = iter->getDx();
         else
             iter = iter->getSx();
     }
 
-    nuovo->setPadre(tmp);
+    nuovo->setparent(tmp);
 
     if(tmp == NULL)
         radice = nuovo;
-    else if(x > tmp->getElemento())
+    else if(x > tmp->getkey())
         tmp->setDx(nuovo);
     else
         tmp->setSx(nuovo);
@@ -155,46 +155,46 @@ template <class H> RBT<H>* RBT<H>::Insert(H x){
 }
 
 template <class H> void RBT<H>::Insert_Fix(Nodo<H>* z){
-    if(z->getPadre() != NULL && z->getPadre()->getColore() == 'B')
+    if(z->getParent() != NULL && z->getParent()->getColore() == 'B')
         return;
     if(z == radice){
         z->setColore('B');
         return;
     }
-    Nodo<H>* padre = z->getPadre();
-    Nodo<H>* nonno = padre->getPadre();
+    Nodo<H>* parent = z->getParent();
+    Nodo<H>* nonno = parent->getParent();
     Nodo<H>* zio = nonno->getDx();
-    if(nonno->getDx() == padre)
+    if(nonno->getDx() == parent)
         zio = nonno->getSx();
     
     if(zio != NULL && zio->getColore() == 'R'){
         zio->setColore('B');
-        padre->setColore('B');
+        parent->setColore('B');
         nonno->setColore('R');
         this->Insert_Fix(nonno);
         return;
     }
 
-    if(padre == nonno->getSx()){
-        if(z == padre->getDx()){
-            this->rLeft(padre);
-            padre = z;
-            z = padre->getSx();
+    if(parent == nonno->getSx()){
+        if(z == parent->getDx()){
+            this->rLeft(parent);
+            parent = z;
+            z = parent->getSx();
         }
 
         this->rRight(nonno);
-        padre->setColore('B');
+        parent->setColore('B');
         nonno->setColore('R');
         return;
     }
     else{
-        if(z == padre->getSx()){
-            this->rRight(padre);
-            padre = z;
-            z = padre->getDx();
+        if(z == parent->getSx()){
+            this->rRight(parent);
+            parent = z;
+            z = parent->getDx();
         }
 
-        padre->setColore('B');
+        parent->setColore('B');
         nonno->setColore('R');
         this->rLeft(nonno);
         return;
