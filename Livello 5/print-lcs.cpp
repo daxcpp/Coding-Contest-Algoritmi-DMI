@@ -2,49 +2,48 @@
 #include <fstream>
 using namespace std;
 
-int** LCSlenght(string x , string y, int n, int m){
-    int** C = new int*[m+1];
-
-    for(int i = 0; i < m+1; i++)    
-        C[i] = new int[n+1];
-
-    for(int i = 0; i < m+1; i++)
-        C[i][0] = 0;
-    for(int i = 0; i < n+1; i++)
-        C[0][i] = 0;
-    
-    for(int i = 1; i < m+1; i++){
-        for(int j = 1; j < n+1; j++){
-            if(x[i-1] == y[j-1])
-                C[i][j] = C[i-1][j-1]+1;
-            else if(C[i-1][j] >= C[i][j-1])
-                C[i][j] = C[i-1][j];
-            else
-                C[i][j] = C[i][j-1];
-        }
+void print_LCS(int** M, string x, string y, int n, int m, ofstream &out){
+  int k=M[n][m];
+  char o[k+1];
+  o[k]='\0';
+  int i=n;
+  int j=m;
+  while (i>0 && j>0){
+    if (x[i-1]==y[j-1]){
+      o[k-1]=x[i-1];
+      k--; i--; j--;
     }
-
-    return C;
+    else
+      if (M[i][j-1] >= M[i-1][j])   
+        j--;
+      else
+        i--;
+  }
+  out << o << endl;
+  for (int a=0; a<n+1; a++)
+    delete[] M[a];
+  delete[] M;
 }
 
-void print_lcs(int** M, string x, string y, int i, int j, ofstream &out){
-    if(i == 0 || j == 0)
-        return;
-    if(x[i-1] == y[j-1]){
-        print_lcs(M, x, y, i-1, j-1, out);
-        out << x[i-1];
-    }
-    else{
-        if(M[i][j-1] >= M[i-1][j])
-            print_lcs(M, x, y, i, j-1, out);
-        else
-            print_lcs(M, x, y, i-1, j, out);
-    }
-}
+void LCS(string x, string y, int n, int m, ofstream &out){
+  int** M=new int*[n+1];
+  for (int i=0; i<n+1; i++)
+    M[i]=new int[m+1];
+  for (int i=0; i<n+1; i++)
+    M[i][0]=0;
+  for (int i=0; i<m+1; i++)
+    M[0][i]=0;
 
-void Soluzione(string x, string y, int n, int m, ofstream &out){
-    print_lcs(LCSlenght(x, y, n, m), x, y, m, n, out);
-    out << endl;
+
+  for (int i=1; i<n+1; i++){
+    for (int j=1; j<m+1; j++){
+      if (x[i-1]==y[j-1])
+        M[i][j]=M[i-1][j-1]+1;
+      else
+        M[i][j]=max(M[i-1][j], M[i][j-1]);
+    }
+  }
+  print_LCS(M, x, y, n, m, out);
 }
 
 
@@ -58,6 +57,6 @@ int main(){
         string x; in >> x;
         string y; in >> y;
 
-        Soluzione(x,y,n,m,out);
+        LCS(x,y,n,m, out);
     }
 }
