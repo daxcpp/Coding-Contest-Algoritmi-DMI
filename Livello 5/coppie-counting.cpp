@@ -103,8 +103,10 @@ int main(){
         Coppia<double>** result = CountingSort(vett, n, out);
         printCoppie(result, n, out);
 
-        for(int i = 1; i < n+1; i++)
+        for(int i = 1; i < n+1; i++){
             delete vett[i];
+            delete result[i];
+        }
 
         delete [] vett;
         delete [] result;
