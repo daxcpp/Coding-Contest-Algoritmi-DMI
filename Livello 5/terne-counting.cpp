@@ -115,6 +115,12 @@ int main(){
 
         Terna<double>** result = CountingSort(vett, n, out);
         printTerne(result, n, out);
+
+        for(int i = 1; i < n+1; i++){
+            delete vett[i];
+            delete result[i];
+        }
+
         delete [] vett;
         delete [] result;
     }
