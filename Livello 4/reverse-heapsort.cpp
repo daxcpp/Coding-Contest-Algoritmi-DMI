@@ -19,6 +19,8 @@ class Heap{
             chiamate = 0;
         }
 
+        ~Heap(){delete [] vett;}
+
         void Heapify(int i){
             if(heapsize >= 1)
                 chiamate++;
@@ -90,8 +92,8 @@ int main(){
             printvett(A, n, out);
 
             delete t;
-            delete vett;
-            delete A;
+            delete []vett;
+            delete [] A;
         }
 
         if(type == "bool"){
@@ -111,8 +113,8 @@ int main(){
             printvett(A, n, out);
 
             delete t;
-            delete vett;
-            delete A;
+            delete []vett;
+            delete [] A;
         }
 
         if(type == "double"){
@@ -132,8 +134,8 @@ int main(){
             printvett(A, n, out);
 
             delete t;
-            delete vett;
-            delete A;
+            delete []vett;
+            delete [] A;
         }
 
         if(type == "char"){
@@ -154,8 +156,8 @@ int main(){
             printvett(A, n, out);
 
             delete t;
-            delete vett;
-            delete A;
+            delete []vett;
+            delete [] A;
         }
     }
 }

@@ -18,6 +18,7 @@ public:
         heapsize = 0;
         vett = new H[maxdim];
     }
+    ~Heap(){delete [] vett;}
 
     void Heapify(int i){
         int l = left(i);

@@ -21,6 +21,8 @@ public:
         chiamate = 0;
     }
 
+    ~Heap(){delete [] vett;}
+
     int getChiamate(){return chiamate;}
 
     void Heapify(int i){

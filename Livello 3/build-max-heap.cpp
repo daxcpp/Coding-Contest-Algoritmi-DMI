@@ -15,6 +15,7 @@ class Heap{
     Heap(){
       heapsize = 0;
     }
+    ~Heap(){delete [] vett;}
 
     void Heapify(int i){
       int l = left(i);
