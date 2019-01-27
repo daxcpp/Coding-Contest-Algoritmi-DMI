@@ -116,6 +116,10 @@ int main(){
 
             out << t->getChiamate() << " ";
             printvett(vettordinato, n, out);
+
+            for(int i = 0; i < n+1; i++)
+                delete vett[i];
+            delete [] vett;
         }
         else if(type == "double"){
             Terna <double>** vett = new Terna <double>*[n+1];
@@ -135,6 +139,10 @@ int main(){
 
             out << t->getChiamate() << " ";
             printvett(vettordinato, n, out);
+
+            for(int i = 0; i < n+1; i++)
+                delete vett[i];
+            delete [] vett;
         }
         else if(type == "char"){
                 Terna <char>** vett = new Terna <char>*[n+1];
@@ -154,6 +162,10 @@ int main(){
 
                 out << t->getChiamate() << " ";
                 printvett(vettordinato, n, out);
+
+                for(int i = 0; i < n+1; i++)
+                    delete vett[i];
+                delete [] vett;
         }
 
     }
