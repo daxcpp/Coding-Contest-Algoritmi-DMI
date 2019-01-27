@@ -45,6 +45,7 @@ public:
         heapsize = 0;
         chiamate = 0;
     }
+    ~Heap(){delete [] vett;}
 
     void Heapify(int i){
         if(heapsize >= 1)
@@ -120,6 +121,7 @@ int main(){
             for(int i = 0; i < n+1; i++)
                 delete vett[i];
             delete [] vett;
+            delete t;
         }
         else if(type == "double"){
             Terna <double>** vett = new Terna <double>*[n+1];
@@ -143,6 +145,7 @@ int main(){
             for(int i = 0; i < n+1; i++)
                 delete vett[i];
             delete [] vett;
+            delete t;
         }
         else if(type == "char"){
                 Terna <char>** vett = new Terna <char>*[n+1];
@@ -166,6 +169,7 @@ int main(){
                 for(int i = 0; i < n+1; i++)
                     delete vett[i];
                 delete [] vett;
+                delete t;
         }
 
     }
