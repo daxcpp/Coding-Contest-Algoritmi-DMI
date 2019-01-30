@@ -3,7 +3,7 @@
 using namespace std;
 
 
-void dedit(string x, string y, int m, int n, ofstream &out){
+void Edit(string x, string y, int m, int n, ofstream &out){
     int C[m+1][n+1];
 
     for(int i = 0; i < m+1; i++)
@@ -35,7 +35,7 @@ int main(){
         string x; in >> x;
         string y; in >> y;
 
-        dedit(y, x, n, m, out);
+        Edit(x, y, m, n, out);
 
     }
 }
