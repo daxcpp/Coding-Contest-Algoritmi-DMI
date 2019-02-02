@@ -184,14 +184,7 @@ template <class H> void BST<H>::rLeft(Nodo<H>* y){
             y->setDx(x->getSx());
             x->setSx(y);
 
-            if(z != NULL){
-                if(y == z->getDx())
-                    z->setDx(x);
-                else
-                    z->setSx(x);
-            }
-            else
-                radice = x;
+            Trapianta(y, x);
 
             x->setPadre(z);
             y->setPadre(x);
@@ -210,14 +203,7 @@ template <class H> void BST<H>::rRight(Nodo<H>* y){
             y->setSx(x->getDx());
             x->setDx(y);
 
-            if(z != NULL){
-                if(y == z->getSx())
-                    z->setSx(x);
-                else
-                    z->setDx(x);
-            }
-            else
-                radice = x;
+            Trapianta(y, x);
             
             x->setPadre(z);
             y->setPadre(x);
