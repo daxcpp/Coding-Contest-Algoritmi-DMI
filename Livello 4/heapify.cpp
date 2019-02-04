@@ -55,11 +55,11 @@ class Heap{
             while(heapsize != 0){
                 this->extract();
             }
+        }  
+
+        void getChiamate(ofstream &out){
+            out << chiamate << endl;
         }
-
-       
-
-        int getChiamate(){return chiamate;}
 };
 
 int main(){
@@ -82,9 +82,9 @@ int main(){
             t->buildHeap(vett, n);
             t->empty();
 
-            out << t->getChiamate() << endl;
+            t->getChiamate(out);
             delete t;
-            delete vett;
+            delete [] vett;
         }
 
         if(type == "bool"){
@@ -98,9 +98,9 @@ int main(){
             t->buildHeap(vett, n);
             t->empty();
 
-            out << t->getChiamate() << endl;
+            t->getChiamate(out);
             delete t;
-            delete vett;
+            delete [] vett;
         }
 
         if(type == "double"){
@@ -114,9 +114,9 @@ int main(){
             t->buildHeap(vett, n);
             t->empty();
     
-            out << t->getChiamate() << endl;
+            t->getChiamate(out);
             delete t;
-            delete vett;
+            delete [] vett;
         }
 
         if(type == "char"){
@@ -130,9 +130,9 @@ int main(){
             t->buildHeap(vett, n);
             t->empty();
 
-            out << t->getChiamate() << endl;
+            t->getChiamate(out);
             delete t;
-            delete vett;
+            delete [] vett;
         }
     }
 }
