@@ -19,7 +19,10 @@ public:
         padre = dx = sx = NULL;
         colore = R;
     }
-
+    ~Nodo(){
+        delete dx;
+        delete sx;
+    }
     //Get
     H getElemento(){return elemento;}
     Nodo<H>* getPadre(){return padre;}
@@ -59,7 +62,7 @@ private:
     void Insert_Fixup(Nodo<H>*);
 public:
     RBT(){radice = NULL;}
-
+    ~RBT(){delete radice;}
     
     void Insert(H);
     void Print(string mode, ofstream&);
