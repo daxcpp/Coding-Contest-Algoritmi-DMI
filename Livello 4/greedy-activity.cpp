@@ -57,6 +57,10 @@ int main(){
         }
 
         ActivitySelect(vett, n, out);
-        delete vett;
+        
+        for(int i = 0; i < n; i++)
+            delete vett[i];
+        
+        delete [] vett;
     }
 }
