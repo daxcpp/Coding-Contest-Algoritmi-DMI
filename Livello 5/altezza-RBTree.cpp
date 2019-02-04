@@ -2,6 +2,9 @@
 #include <fstream>
 using namespace std;
 
+#define B 0
+#define R 1
+
 template <class H>
 class Nodo{
 private:
@@ -9,14 +12,14 @@ private:
     Nodo<H>* padre;
     Nodo<H>* dx;
     Nodo<H>* sx;
-    char colore;
+    bool colore;
 public:
     Nodo(H x){
         elemento = x;
         padre = NULL;
         dx = NULL;
         sx = NULL;
-        colore = 'R';
+        colore = R;
     }
 
     //Get
@@ -24,81 +27,81 @@ public:
     Nodo<H>* getPadre(){return padre;}
     Nodo<H>* getDx(){return dx;}
     Nodo<H>* getSx(){return sx;}
-    char getColore(){return colore;}
+    bool getColore(){return colore;}
 
     //Set
     void setPadre(Nodo<H>* x){padre = x;}
     void setDx(Nodo<H>* x){dx = x;}
     void setSx(Nodo<H>* x){sx = x;}
-    void setColore(char x){colore = x;}
+    void setColore(bool x){colore = x;}
 };
 
 template <class H>
 class RBT{
 private:
     Nodo<H>* radice;
+
+    void Trapianta(Nodo<H>*, Nodo<H>*);
+    void rLeft(Nodo<H>*);
+    void rRight(Nodo<H>*);
+    void Insert_Fixup(Nodo<H>*);
+    int Altezza(Nodo<H>*);
 public:
     RBT(){radice = NULL;}
 
-    void rLeft(Nodo<H>*);
-    void rRight(Nodo<H>*);
-    RBT<H>* Insert(H);
-    void Insert_Fix(Nodo<H>*);
-    int Altezza(Nodo<H>*);
+    void Insert(H);
     int getAltezza();
 };
+
+template <class H> void RBT<H>::Trapianta(Nodo<H>* u, Nodo<H>* v){
+    if(u->getPadre() == NULL)
+        radice = v;
+    else if(u->getPadre()->getDx() == u)
+        u->getPadre()->setDx(v);
+    else
+        u->getPadre()->setSx(v);
+    
+    if(v != NULL)
+        v->setPadre(u->getPadre());
+}
 
 template <class H> void RBT<H>::rLeft(Nodo<H>* y){
      if(y != NULL){
         Nodo<H>* x = y->getDx();
-        Nodo<H>* z = y->getPadre();
+        
+        if(x != NULL){
+            y->setDx(x->getSx());
 
-        y->setDx(x->getSx());
-        x->setSx(y);
+            if(y->getDx() != NULL)
+                y->getDx()->setPadre(y);
 
-        if(z != NULL){
-            if(y == z->getDx())
-                z->setDx(x);
-            else
-                z->setSx(x);
+            Trapianta(y, x);
+
+            y->setPadre(x);
+            x->setSx(y);
         }
-        else
-            radice = x;
-
-        x->setPadre(z);
-        y->setPadre(x);
-
-        if(y->getDx())
-            y->getDx()->setPadre(y); 
     }
 }
 
 template <class H> void RBT<H>::rRight(Nodo<H>* y){
     if(y != NULL ){
         Nodo<H>* x = y->getSx();
-        Nodo<H>* z = y->getPadre();
 
-        y->setSx(x->getDx());
-        x->setDx(y);
+        if(x != NULL){
+            y->setSx(x->getDx());
 
-        if(z != NULL){
-            if(y == z->getSx())
-                z->setSx(x);
-            else
-                z->setDx(x);
+            if(y->getSx() != NULL)
+                y->getSx()->setPadre(y);
+
+            Trapianta(y, x);
+
+            y->setPadre(x);
+            x->setDx(y);
         }
-        else
-            radice = x;
-        
-        x->setPadre(z);
-        y->setPadre(x);
-
-        if(y->getSx())
-            y->getSx()->setPadre(y);
     }
 }
 
-template <class H> RBT<H>* RBT<H>::Insert(H x){
+template <class H> void RBT<H>::Insert(H x){
     Nodo<H>* nuovo = new Nodo<H>(x);
 
     Nodo<H>* iter = radice;
@@ -122,16 +125,14 @@ template <class H> RBT<H>* RBT<H>::Insert(H x){
     else
         tmp->setSx(nuovo);
     
-    this->Insert_Fix(nuovo);
-    
-    return this;
+    Insert_Fixup(nuovo);
 }
 
-template <class H> void RBT<H>::Insert_Fix(Nodo<H>* z){
-    if(z->getPadre() != NULL && z->getPadre()->getColore() == 'B')
+template <class H> void RBT<H>::Insert_Fixup(Nodo<H>* z){
+    if(z->getPadre() != NULL && z->getPadre()->getColore() == B)
         return;
     if(z == radice){
-        z->setColore('B');
+        z->setColore(B);
         return;
     }
     Nodo<H>* padre = z->getPadre();
@@ -140,36 +141,36 @@ template <class H> void RBT<H>::Insert_Fix(Nodo<H>* z){
     if(nonno->getDx() == padre)
         zio = nonno->getSx();
     
-    if(zio != NULL && zio->getColore() == 'R'){
-        zio->setColore('B');
-        padre->setColore('B');
-        nonno->setColore('R');
-        this->Insert_Fix(nonno);
+    if(zio != NULL && zio->getColore() == R){
+        zio->setColore(B);
+        padre->setColore(B);
+        nonno->setColore(R);
+        Insert_Fixup(nonno);
         return;
     }
 
     if(padre == nonno->getSx()){
         if(z == padre->getDx()){
-            this->rLeft(padre);
+            rLeft(padre);
             padre = z;
             z = padre->getSx();
         }
 
-        this->rRight(nonno);
-        padre->setColore('B');
-        nonno->setColore('R');
+        rRight(nonno);
+        padre->setColore(B);
+        nonno->setColore(R);
         return;
     }
     else{
         if(z == padre->getSx()){
-            this->rRight(padre);
+            rRight(padre);
             padre = z;
             z = padre->getDx();
         }
 
-        padre->setColore('B');
-        nonno->setColore('R');
-        this->rLeft(nonno);
+        padre->setColore(B);
+        nonno->setColore(R);
+        rLeft(nonno);
         return;
     }
 }
