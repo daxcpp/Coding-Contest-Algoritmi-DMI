@@ -21,7 +21,10 @@ public:
         sx = NULL;
         colore = R;
     }
-
+    ~Nodo(){
+        delete dx;
+        delete sx;
+    }
     //Get
     H getElemento(){return elemento;}
     Nodo<H>* getPadre(){return padre;}
@@ -48,7 +51,7 @@ private:
     int Altezza(Nodo<H>*);
 public:
     RBT(){radice = NULL;}
-
+    ~RBT(){delete radice;}
     void Insert(H);
     int getAltezza();
 };
