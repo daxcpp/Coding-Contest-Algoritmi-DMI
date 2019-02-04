@@ -19,7 +19,7 @@ public:
 
 void sortA(Activity** vett, int n){ //Fuck complexity
     for(int i = 0; i < n; i++)
-        for(int j = 0; j < n; j++)
+        for(int j = i+1; j < n; j++)
             if(vett[i]->getF() < vett[j]->getF())
                 swap(vett[i], vett[j]);
 }
