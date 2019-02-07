@@ -89,8 +89,8 @@ int main(){
             printvett(A, n, out);
 
             delete t;
-            delete vett;
-            delete A;
+            delete [] vett;
+            delete [] A;
         }
 
         if(type == "bool"){

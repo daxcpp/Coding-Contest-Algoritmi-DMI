@@ -34,5 +34,6 @@ int main(){
 
         Knapsack(vett, pmax, out);
 
+        vett.~vector();
     }
 }
