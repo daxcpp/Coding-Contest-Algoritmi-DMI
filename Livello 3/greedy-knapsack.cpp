@@ -3,7 +3,7 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-
+//Coded By daxcpp (Davide Carnemolla)
 
 void Knapsack(vector<int> vett, int pmax, ostream &out){
     int sum = 0;

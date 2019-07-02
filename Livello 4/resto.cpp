@@ -2,6 +2,7 @@
 #include <fstream>
 #include <climits>
 using namespace std;
+//Coded By daxcpp (Davide Carnemolla)
 
 int minCoin(int* vett, int n, int r){
     int table[r+1];

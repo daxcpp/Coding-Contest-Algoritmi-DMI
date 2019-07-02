@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
+//Coded By daxcpp (Davide Carnemolla)
 
 int findMin(int* vett, int n){
     int min = 1;
