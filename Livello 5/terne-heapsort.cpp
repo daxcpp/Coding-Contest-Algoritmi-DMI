@@ -1,7 +1,7 @@
+//Coded By daxcpp (Davide Carnemolla)
 #include <iostream>
 #include <fstream>
 using namespace std;
-//Coded By daxcpp (Davide Carnemolla)
 
 template <class H>
 class Terna{
